@@ -1,0 +1,1 @@
+xcopy lcdnova.ttf C:\Windows\Fonts /Y
