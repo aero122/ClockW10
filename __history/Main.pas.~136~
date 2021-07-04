@@ -104,12 +104,12 @@ begin
   Label1.Caption:=FormatDateTime('hh:mm',Now);
   //Получаем значение из ini файла
   ini:=TiniFile.Create(ExtractFilePath(paramstr(0))+'config.ini');
-  Label1.Font.Size:=ini.ReadInteger('FontStyle','Size',35);
-  Label1.Font.Color:=StringToColor(ini.ReadString('FontStyle','Color','clBlack'));
-  Form1.Left:=ini.ReadInteger('Position','X',0);
+  Label1.Font.Size:=ini.ReadInteger('FontStyle','Size',35);//Размер шрифта
+  Label1.Font.Color:=StringToColor(ini.ReadString('FontStyle','Color','clBlack'));//Цвет шрифта
+  Form1.Left:=ini.ReadInteger('Position','X',0);//Расположение часов
   Form1.Top:=ini.ReadInteger('Position','Y',0);
-  Label1.Font.Name:=ini.ReadString('FontStyle','Name','Arial');
-  if ini.ReadBool('Position','AlwaysOnTop',True) then
+  Label1.Font.Name:=ini.ReadString('FontStyle','Name','Arial');//Шрифт
+  if ini.ReadBool('Position','AlwaysOnTop',True) then//Поверх всех окон
     begin
       Form1.FormStyle:=fsStayOnTop;
       N2.Caption:=WideChar($2713)+' Поверх всех окон';
@@ -119,9 +119,9 @@ begin
   FormSize(Label1.Width, Label1.Height);
 end;
 
-//Перетаскивание формы за Label
+
 procedure TForm1.Label1MouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
+  Shift: TShiftState; X, Y: Integer);//Перетаскивание формы за Label
 const
   SC_DragMove = $F012;
 begin
@@ -129,8 +129,7 @@ begin
   perform(WM_SysCommand, SC_DragMove, 0);
 end;
 
-//Закрыть окно
-procedure TForm1.N10Click(Sender: TObject);
+procedure TForm1.N10Click(Sender: TObject);//Выбрать цвет текста
 begin
   if ColorDialog1.Execute() then
   Label1.Font.Color:=ColorDialog1.Color;
@@ -195,12 +194,14 @@ end;
 //Выбор шрифта
 procedure TForm1.N9Click(Sender: TObject);
 begin
-  FontDialog1.Execute();
-  Label1.Font:=FontDialog1.Font;
+  If FontDialog1.Execute() then
+  begin
+    Label1.Font:=FontDialog1.Font;
+  end;
   FormSize(Label1.Width,Label1.Height);
 end;
 
-//Каждую секунду меняем время
+//Каждые три секунды меняем время
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   Label1.Caption:=FormatDateTime('hh:mm',Now);
@@ -211,12 +212,6 @@ end;
 procedure TForm1.TrayIcon1Click(Sender: TObject);
 begin
   SetForegroundWindow(Application.MainForm.Handle);
-  {if Form1.FormStyle=fsNormal then
-    begin
-      Form1.FormStyle:=fsStayOnTop;
-      Form1.FormStyle:=fsNormal;
-    end;
-  Application.BringToFront;}
 end;
 
 procedure TForm1.TrayIcon1MouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -224,10 +219,10 @@ procedure TForm1.TrayIcon1MouseMove(Sender: TObject; Shift: TShiftState; X,
 //При наведении на иконку в трее генерируем сообщение
 var
   rnd:byte;
-  hint:string[50];
+  hint:String;
 begin
   Randomize();
-  rnd:=Random(9);
+  rnd:=Random(10);
   case rnd of
   0:hint:='Я всё запомнил!';
   1:hint:='Зачем Вы это сделали?';
@@ -238,6 +233,7 @@ begin
   6:hint:='Мне надоело менять циферки';
   7:hint:='Это просто часы';
   8:hint:='Самые обычные часы и ничего больше';
+  9:hint:='Самое время отдохнуть';
   end;
   TrayIcon1.Hint:=hint;
 end;

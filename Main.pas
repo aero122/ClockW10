@@ -195,7 +195,9 @@ end;
 procedure TForm1.N9Click(Sender: TObject);
 begin
   If FontDialog1.Execute() then
-  Label1.Font:=FontDialog1.Font;
+  begin
+    Label1.Font:=FontDialog1.Font;
+  end;
   FormSize(Label1.Width,Label1.Height);
 end;
 
