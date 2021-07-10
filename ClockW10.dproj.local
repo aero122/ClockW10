@@ -1,15 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.888,=D:\Projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.394,=D:\Projects\Watch\Unit2.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.125,D:\Projects\Watch\Main.pas=D:\Projects\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.378,D:\Projects\Watch\About.dfm=D:\Projects\Watch\Unit2.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.378,D:\Projects\Watch\About.pas=D:\Projects\Watch\Unit2.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.028,=C:\Users\Aero\Downloads\lcdnova.ttf</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.394,=D:\Projects\Watch\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.888,=D:\Projects\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.636,C:\Users\Aero\Downloads\lcdnova.ttf=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.028,=C:\Users\Aero\Downloads\lcdnova.ttf</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.378,D:\Projects\Watch\About.dfm=D:\Projects\Watch\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.955,D:\Projects\Watch\AAL.pas=D:\Projects\Watch\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.125,D:\Projects\Watch\Main.dfm=D:\Projects\Unit1.dfm</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.760,D:\Projects\Watch\ClockW10.dproj=D:\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.378,D:\Projects\Watch\About.pas=D:\Projects\Watch\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.893,=D:\Projects\Watch\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.483,=D:\Projects\Watch\Fonts\lcdnova.ttf</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.760,D:\Projects\Watch\ClockW10.dproj=D:\Projects\Project1.dproj</Transaction>
   </Transactions>
 </BorlandProject>

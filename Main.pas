@@ -4,11 +4,11 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Menus, inifiles, About;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Menus, inifiles, About, AAL;
 
 type
   TForm1 = class(TForm)
-    Label1: TLabel;
+    Label1: AAL.TLabel;
     Timer1: TTimer;
     PopupMenu1: TPopupMenu;
     N1: TMenuItem;
@@ -73,10 +73,11 @@ procedure TForm1.FormDestroy(Sender: TObject);
 var
   ini:TiniFile;
 begin
-  ini:=TiniFile.Create(ExtractFilePath(paramStr(0))+'config.ini');
+  ini:=TiniFile.Create(ExtractFilePath(GetEnvironmentVariable('localappdata'))+'Local\ClockW10\config.ini');    //paramStr(0))+'%localappdata%\ClockW10\config.ini'
   ini.WriteInteger('FontStyle','Size',Label1.Font.Size);
   ini.WriteString('FontStyle','Color',ColorToString(Label1.Font.Color));
   ini.WriteString('FontStyle','Name',Label1.Font.Name);
+  //ini.WriteString('Program','Version',); - В будущем, добавить в файл конфига версию для обновлений
   ini.WriteInteger('Position','X',Form1.Left);
   ini.WriteInteger('Position','Y',Form1.Top);
   ini.WriteBool('Position','AlwaysOnTop',Form1.FormStyle=fsStayOnTop);
@@ -92,8 +93,8 @@ end;
 
 Procedure TForm1.FormSize(w: Integer; h: Integer); //Меняем размер формы
 begin
-  Form1.Width:=w;
-  Form1.Height:=h;
+  Form1.Width:=w+10;
+  Form1.Height:=h+10;
 end;
 
 //При открытии формы
@@ -102,8 +103,10 @@ var
   ini:TiniFile;
 begin
   Label1.Caption:=FormatDateTime('hh:mm',Now);
+
+  CreateDir(ExtractFilePath(GetEnvironmentVariable('appdata'))+'Local\ClockW10\');
   //Получаем значение из ini файла
-  ini:=TiniFile.Create(ExtractFilePath(paramstr(0))+'config.ini');
+  ini:=TiniFile.Create(ExtractFilePath(GetEnvironmentVariable('localappdata'))+'Local\ClockW10\config.ini');
   Label1.Font.Size:=ini.ReadInteger('FontStyle','Size',35);//Размер шрифта
   Label1.Font.Color:=StringToColor(ini.ReadString('FontStyle','Color','clBlack'));//Цвет шрифта
   Form1.Left:=ini.ReadInteger('Position','X',0);//Расположение часов
@@ -117,16 +120,31 @@ begin
   ini.Free;
   //Ужимаем форму по размеру Label
   FormSize(Label1.Width, Label1.Height);
+  FontDialog1.MinFontSize:=12;
 end;
 
+//Определяем цвет пикселя
+procedure GetColor();
+var
+  Dc : HDC;
+  Pix : Cardinal;
+begin
+  Dc:=GetDC(0);
+  Pix:=GetPixel(Dc, Form1.Left, form1.Top);
+  Form1.Color:=Pix;
+  Form1.TransparentColorValue:=Pix;
+  ReleaseDC(0, Dc);
+end;
 
+//Перетаскивание формы за Label
 procedure TForm1.Label1MouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);//Перетаскивание формы за Label
+  Shift: TShiftState; X, Y: Integer);
 const
   SC_DragMove = $F012;
 begin
   ReleaseCapture;
   perform(WM_SysCommand, SC_DragMove, 0);
+  GetColor;
 end;
 
 procedure TForm1.N10Click(Sender: TObject);//Выбрать цвет текста
@@ -194,6 +212,8 @@ end;
 //Выбор шрифта
 procedure TForm1.N9Click(Sender: TObject);
 begin
+  //При открытии FontDialog будет отображться шрифт, выбранный для Label1
+  FontDialog1.Font:=Label1.Font;
   If FontDialog1.Execute() then
   begin
     Label1.Font:=FontDialog1.Font;
@@ -206,6 +226,7 @@ procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   Label1.Caption:=FormatDateTime('hh:mm',Now);
   FormSize(Label1.Width,Label1.Height);
+  GetColor;//Меняем цвет формы, для нормальной отработки сглаживания
 end;
 
 //Клик по иконке в трее

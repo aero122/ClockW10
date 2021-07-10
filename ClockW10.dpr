@@ -7,7 +7,8 @@ program ClockW10;
 uses
   Vcl.Forms,
   Main in 'Main.pas' {Form1},
-  About in 'About.pas' {Form2};
+  About in 'About.pas' {Form2},
+  AAL in 'AAL.pas';
 
 {$R *.res}
 

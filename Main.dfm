@@ -26,18 +26,19 @@ object Form1: TForm1
     Height = 37
     Alignment = taCenter
     Caption = 'Label1'
+    Color = clBlack
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -33
     Font.Name = 'a_LCDNova'
     Font.Style = []
+    ParentColor = False
     ParentFont = False
     PopupMenu = PopupMenu1
     Transparent = True
     OnMouseDown = Label1MouseDown
   end
   object Timer1: TTimer
-    Interval = 3000
     OnTimer = Timer1Timer
     Left = 112
     Top = 136
@@ -2215,6 +2216,8 @@ object Form1: TForm1
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
+    MinFontSize = 32
+    MaxFontSize = 256
     Options = [fdAnsiOnly, fdEffects]
     Left = 288
     Top = 128
